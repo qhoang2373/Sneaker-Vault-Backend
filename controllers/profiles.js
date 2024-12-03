@@ -8,6 +8,9 @@ const verifyToken = require('../middleware/verify-token');
 
 router.get('/:userId', verifyToken, async (req, res) => {
     try {
+        if (req.user._id !== req.params.userId){ 
+            return res.status(401).json({ error: "Unauthorized"})
+        }
       const user = await User.findById(req.params.userId);
       if (!user) {
         res.status(404);
