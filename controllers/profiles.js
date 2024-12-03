@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const profilesRouter = require('./controllers/profiles');
+
 
 router.get('/:userId', async (req, res) => {
     try {
@@ -18,5 +20,7 @@ router.get('/:userId', async (req, res) => {
       }
     }
   });
+
+  app.use('/profiles', profilesRouter);
   
   module.exports = router;
