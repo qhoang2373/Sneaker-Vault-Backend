@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const SALT_LENGTH = 12;
 
+// Sign up route 
 router.post('/signup', async (req, res) => {
     try {
       
@@ -25,6 +26,7 @@ router.post('/signup', async (req, res) => {
     }
   });
 
+// Sign in Route 
 router.post('/signin', async (req, res) => {
     try {
       const user = await User.findOne({ username: req.body.username });
