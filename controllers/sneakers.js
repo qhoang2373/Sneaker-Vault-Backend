@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.use(verifyToken);
 
-// Create Route 
+// Create Route: COMPLETE
 router.post('/', async (req, res) => {
     try {
         req.body.author = req.user._id;
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// index route
+// index route: COMPLETE
 router.get('/', async (req, res) => {
     try {
       const sneakers = await Sneaker.find({})
@@ -35,7 +35,52 @@ router.get('/', async (req, res) => {
     }
   });
 
+  // Show Route: cONTINUE WORKING ON THIS
+  router.get('/:sneakerId', async (req, res) => {
+    try {
+      const sneaker = await Sneaker.findById(req.params.sneakerId).populate('author');
+      res.status(200).json(sneaker);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
 
+  // Update route: CONTINUE WORKING ON THIS 
+  router.put('/:sneakerId', async (req, res) => {
+    try {
+      const sneaker = await Sneaker.findById(req.params.sneakerId);
+        if (!sneaker.author.equals(req.user._id)) {
+        return res.status(403).send("Access Denied!");
+      }
+        const updatedSneaker = await Sneaker.findByIdAndUpdate(
+        req.params.sneakerId,
+        req.body,
+        { new: true }
+      );
+        updatedSneaker._doc.author = req.user;
+        res.status(200).json(updatedSneaker);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
+
+  // Delete route: CONTINUE WORKING ON THIS
+  router.delete('/:sneakerId', async (req,res) => {
+    try{
+        const sneaker = await Sneaker.findById(req.params.sneakerId);
+
+        if(!sneaker.author.equals(req.user._id)) {
+            return res.status(403).send("Access Denied!")
+        }
+
+    const deletedSneaker = await Sneaker.findByIdAndDelete(req.params.sneakerId);
+    res.status(200).json(deletedSneaker);
+
+    }catch(error) {
+        res.status(500).json(error)
+    }
+});
+  
 
 
 module.exports = router;
