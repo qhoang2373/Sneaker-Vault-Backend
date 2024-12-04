@@ -80,5 +80,23 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Create Comment route:
+router.post('/:sneakerId/comments', async (req, res) => {
+  try {
+    req.body.author = req.user._id;
+    const sneaker = await Sneaker.findById(req.params.sneakerId);
+    sneaker.comments.push(req.body);
+    await sneaker.save();
+    console.log(sneaker, {body:req.body})
+    const newComment = sneaker.comments[sneaker.comments.length - 1];
+    res.status(201).json(newComment);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error);
+  }
+});
+
+
   
 module.exports = router;
+

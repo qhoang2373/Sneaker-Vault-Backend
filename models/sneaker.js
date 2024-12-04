@@ -26,15 +26,17 @@ const sneakerSchema = new mongoose.Schema(
       required: true,
       enum: ['Nike', 'Adidas', 'Jordan', 'NewBalance'],
     },
-    author: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    author: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true     
+    },
     comments: [commentSchema]
-  },
+  }, 
   { timestamps: true }
 );
 
 const Sneaker = mongoose.model('Sneaker', sneakerSchema);
 
 module.exports = Sneaker
+
 
 
 
@@ -111,3 +113,5 @@ module.exports = Sneaker
 // const Sneaker = mongoose.model('Sneaker', sneakerSchema);
 
 // module.exports = Sneaker
+
+    // newComment._doc.author = req.user;
