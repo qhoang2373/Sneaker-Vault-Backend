@@ -16,7 +16,6 @@ router.post('/', async (req, res) => {
         const sneaker = await Sneaker.create(req.body);
         sneaker._doc.author = req.user;
         res.status(200).json(sneaker);
-
     }catch (error) {
         console.log(error);
         res.status(500).json(error);
@@ -35,7 +34,7 @@ router.get('/', async (req, res) => {
     }
   });
 
-  // Show Route: cONTINUE WORKING ON THIS
+  // Show Route: COMPLETE
   router.get('/:sneakerId', async (req, res) => {
     try {
       const sneaker = await Sneaker.findById(req.params.sneakerId).populate('author');
@@ -45,7 +44,7 @@ router.get('/', async (req, res) => {
     }
   });
 
-  // Update route: CONTINUE WORKING ON THIS 
+  // Update route: COMPLETE
   router.put('/:sneakerId', async (req, res) => {
     try {
       const sneaker = await Sneaker.findById(req.params.sneakerId);
@@ -53,10 +52,10 @@ router.get('/', async (req, res) => {
         return res.status(403).send("Access Denied!");
       }
         const updatedSneaker = await Sneaker.findByIdAndUpdate(
-        req.params.sneakerId,
-        req.body,
-        { new: true }
-      );
+          req.params.sneakerId,
+          req.body, 
+          { new: true }
+        );
         updatedSneaker._doc.author = req.user;
         res.status(200).json(updatedSneaker);
     } catch (error) {
@@ -64,7 +63,7 @@ router.get('/', async (req, res) => {
     }
   });
 
-  // Delete route: CONTINUE WORKING ON THIS
+  // Delete route: COMPLETE
   router.delete('/:sneakerId', async (req,res) => {
     try{
         const sneaker = await Sneaker.findById(req.params.sneakerId);
@@ -80,7 +79,6 @@ router.get('/', async (req, res) => {
         res.status(500).json(error)
     }
 });
+
   
-
-
 module.exports = router;
