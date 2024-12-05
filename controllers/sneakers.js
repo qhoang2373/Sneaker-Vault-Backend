@@ -67,36 +67,56 @@ router.get('/', async (req, res) => {
   router.delete('/:sneakerId', async (req,res) => {
     try{
         const sneaker = await Sneaker.findById(req.params.sneakerId);
-
         if(!sneaker.author.equals(req.user._id)) {
             return res.status(403).send("Access Denied!")
         }
-
     const deletedSneaker = await Sneaker.findByIdAndDelete(req.params.sneakerId);
     res.status(200).json(deletedSneaker);
-
     }catch(error) {
         res.status(500).json(error)
     }
 });
 
-// Create Comment route:
+// Create Comment route: COMPLETE
 router.post('/:sneakerId/comments', async (req, res) => {
   try {
     req.body.author = req.user._id;
     const sneaker = await Sneaker.findById(req.params.sneakerId);
     sneaker.comments.push(req.body);
     await sneaker.save();
-    console.log(sneaker, {body:req.body})
+    // console.log(sneaker, {body:req.body})
     const newComment = sneaker.comments[sneaker.comments.length - 1];
     res.status(201).json(newComment);
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     res.status(500).json(error);
   }
 });
 
+// Update Comment route: COMPLETE
+router.put('/:sneakerId/comments/:commentId', async (req, res) => {
+  try {
+    const sneaker = await Sneaker.findById(req.params.sneakerId);
+    const comment = sneaker.comments.id(req.params.commentId);
+    // comment.text = req.body.text;
+    await sneaker.save();
+    res.status(200).json({ message: 'Ok' });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-  
+// Delete Comment route: COMPLETE
+router.delete('/:sneakerId/comments/:commentId', async (req, res) => {
+  try {
+    const sneaker = await Sneaker.findById(req.params.sneakerId);
+    sneaker.comments.remove({ _id: req.params.commentId });
+    await sneaker.save();
+    res.status(200).json({ message: 'Ok' });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
 
