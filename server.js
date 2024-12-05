@@ -7,6 +7,7 @@ const testJWTRouter = require('./controllers/test-jwt');
 const usersRouter = require('./controllers/users');
 const profilesRouter = require('./controllers/profiles');
 const sneakersRouter = require('./controllers/sneakers.js');
+const cors = require('cors');
 
 
 
@@ -21,6 +22,7 @@ app.use('/test-jwt', testJWTRouter);
 app.use('/users', usersRouter);
 app.use('/profiles', profilesRouter);
 app.use('/sneakers', sneakersRouter);
+app.use(cors())
 
 
 
