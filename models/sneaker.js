@@ -24,10 +24,12 @@ const sneakerSchema = new mongoose.Schema(
     brand: {
       type: String,
       required: true,
-      enum: ['Nike', 'Adidas', 'Jordan', 'NewBalance'],
+      enum: ['Nike', 'Adidas', 'Jordan', 'NewBalance']
     },
-    author: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true     
-    },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+  },
     comments: [commentSchema]
   }, 
   { timestamps: true }

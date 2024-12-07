@@ -3,6 +3,7 @@ const verifyToken = require('../middleware/verify-token.js');
 const Sneaker = require('../models/sneaker.js');
 const router = express.Router();
 
+
 // ========== Public Routes ===========
 
 // ========= Protected Routes =========
@@ -37,7 +38,8 @@ router.get('/', async (req, res) => {
   // Show Route: COMPLETE
   router.get('/:sneakerId', async (req, res) => {
     try {
-      const sneaker = await Sneaker.findById(req.params.sneakerId).populate('author');
+      const sneaker = await Sneaker.findById(req.params.sneakerId).populate(['author','comments.author',
+      ]);
       res.status(200).json(sneaker);
     } catch (error) {
       res.status(500).json(error);
@@ -84,11 +86,10 @@ router.post('/:sneakerId/comments', async (req, res) => {
     const sneaker = await Sneaker.findById(req.params.sneakerId);
     sneaker.comments.push(req.body);
     await sneaker.save();
-    // console.log(sneaker, {body:req.body})
     const newComment = sneaker.comments[sneaker.comments.length - 1];
+    newComment._doc.author = req.user
     res.status(201).json(newComment);
   } catch (error) {
-    // console.log(error)
     res.status(500).json(error);
   }
 });
