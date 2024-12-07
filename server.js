@@ -9,7 +9,6 @@ const usersRouter = require('./controllers/users');
 const profilesRouter = require('./controllers/profiles');
 const sneakersRouter = require('./controllers/sneakers.js');
 
-
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on('connected', () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
