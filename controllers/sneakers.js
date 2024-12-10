@@ -3,14 +3,10 @@ const verifyToken = require('../middleware/verify-token.js');
 const Sneaker = require('../models/sneaker.js');
 const router = express.Router();
 
-
-// ========== Public Routes ===========
-
 // ========= Protected Routes =========
 
 router.use(verifyToken);
 
-// Create Route: COMPLETE
 router.post('/', async (req, res) => {
     try {
         req.body.author = req.user._id;
@@ -23,7 +19,6 @@ router.post('/', async (req, res) => {
     }
 });
 
-// index route: COMPLETE
 router.get('/', async (req, res) => {
     try {
       const sneakers = await Sneaker.find({})
@@ -35,7 +30,6 @@ router.get('/', async (req, res) => {
     }
   });
 
-  // Show Route: COMPLETE
   router.get('/:sneakerId', async (req, res) => {
     try {
       const sneaker = await Sneaker.findById(req.params.sneakerId).populate(['author','comments.author',
@@ -46,7 +40,6 @@ router.get('/', async (req, res) => {
     }
   });
 
-  // Update route: COMPLETE
   router.put('/:sneakerId', async (req, res) => {
     try {
       const sneaker = await Sneaker.findById(req.params.sneakerId);
@@ -65,7 +58,6 @@ router.get('/', async (req, res) => {
     }
   });
 
-  // Delete route: COMPLETE
   router.delete('/:sneakerId', async (req,res) => {
     try{
         const sneaker = await Sneaker.findById(req.params.sneakerId);
@@ -79,7 +71,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Create Comment route: COMPLETE
 router.post('/:sneakerId/comments', async (req, res) => {
   try {
     req.body.author = req.user._id;
@@ -94,12 +85,10 @@ router.post('/:sneakerId/comments', async (req, res) => {
   }
 });
 
-// Update Comment route: COMPLETE
 router.put('/:sneakerId/comments/:commentId', async (req, res) => {
   try {
     const sneaker = await Sneaker.findById(req.params.sneakerId);
     const comment = sneaker.comments.id(req.params.commentId);
-    // comment.text = req.body.text;
     await sneaker.save();
     res.status(200).json({ message: 'Ok' });
   } catch (err) {
@@ -107,7 +96,6 @@ router.put('/:sneakerId/comments/:commentId', async (req, res) => {
   }
 });
 
-// Delete Comment route: COMPLETE
 router.delete('/:sneakerId/comments/:commentId', async (req, res) => {
   try {
     const sneaker = await Sneaker.findById(req.params.sneakerId);

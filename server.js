@@ -12,6 +12,7 @@ const sneakersRouter = require('./controllers/sneakers.js');
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on('connected', () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
+  console.log(process.env.MONGODB_URI)
 });
 
 app.use(cors())
@@ -22,11 +23,6 @@ app.use('/users', usersRouter);
 app.use('/profiles', profilesRouter);
 app.use('/sneakers', sneakersRouter);
 
-
-
-// app.listen(3000, () => {
-//   console.log('The express app is ready!');
-// });
 
 const PORT= process.env.PORT || 3000
 app.listen(PORT, () => {
