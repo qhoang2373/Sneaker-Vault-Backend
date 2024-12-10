@@ -24,11 +24,7 @@ app.use('/profiles', profilesRouter);
 app.use('/sneakers', sneakersRouter);
 
 
-// const PORT= process.env.PORT || 3000
-// app.listen(PORT, () => {
-//   console.log('The express app is ready!');
-// });
-
-app.listen(3000, () => {
-    console.log('The express app is ready!');
+const PORT= process.env.PORT || 3000
+app.listen(PORT, () => {
+  console.log('The express app is ready!');
 });
