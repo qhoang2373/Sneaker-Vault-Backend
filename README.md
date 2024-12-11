@@ -19,12 +19,14 @@ Key Features will allow users to view and manage their Sneaker collection by nam
 * Add a feature to upload single or multiple images for each sneaker.
 * Improvements to CSS. 
 
-## Technologies Used:
+## Technologies/Attributions Used:
 
 * Express
 * React
-* NodeJs
-* CSS
+* mongoose
+* Javascript
+* Nodemon
+* CRUD
 
 ## User Stories
 * AAU, I want to sign up, sign in, and sign out of the app.
